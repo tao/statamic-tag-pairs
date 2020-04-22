@@ -6,32 +6,35 @@
             {{ content | widont }}
         </header>
 
-        {{ collection:articles as="articles" }}
-        {{ if no_results }}
-        <h2 class="text-3xl italic tracking-tight">Feel the rhythm! Feel the rhyme! Get on up, it's writing time! Cool
-            writings!</h2>
-        {{ /if }}
+        {{ collection:articles limit="10" paginate="true" as="posts" }}
+          {{ if no_results }}
+            <h2 class="text-3xl italic tracking-tight">
+              Feel the rhythm! Feel the rhyme! Get on up, it's writing time! Cool writings!
+            </h2>
+          {{ /if }}
 
-        {{ articles }}
-        <div class="mb-2">
-            <a href="{{ url }}" class="text-lg hover:text-teal tracking-tight leading-tight font-bold">
-                {{ title | widont }}
-            </a>
-        </div>
-        {{ /articles }}
+          <div class="mb-16">
+            {{ posts }}
+              <div class="mb-2">
+                  <a href="{{ url }}" class="text-lg hover:text-teal tracking-tight leading-tight font-bold">
+                      <span class="opacity-25">{{ date }}.</span> {{ title | widont }}
+                  </a>
+              </div>
+            {{ /posts }}
+          </div>
 
-        {{ if total_results > 10 }}
-        {{ paginate }}
-        <div class="flex justify-between text-xl -mx-16 pt-16 font-bold">
-            <a href="{{ prev_page }}" class="{{ ! prev_page ??= 'opacity-25' }}">
-                &larr; Back to the future
-            </a>
-            <a href="{{ next_page }}">
-                Forward to the past &rarr;
-            </a>
-        </div>
-        {{ /paginate }}
-        {{ /if }}
-        {{ /collection:articles }}
+
+          {{ paginate }}
+          <div class="flex justify-between text-xl -mx-16 pt-16 font-bold">
+              <a href="{{ prev_page }}" class="{{ ! prev_page ??= 'opacity-25' }}">
+                  &larr; Back to the future
+              </a>
+              <a href="{{ next_page }}">
+                  Forward to the past &rarr;
+              </a>
+          </div>
+          {{ /paginate }}
+
+      {{ /collection:articles }}
     </article>
 </div>
